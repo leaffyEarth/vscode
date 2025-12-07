@@ -4,7 +4,7 @@ permissions: {}
 jobs:
   check-metadata:
     name: 'Check metadata'
-runs-on: [ self-hosted, monkci-runners-8vcpu ]
+    runs-on: [ self-hosted, monkci-runners-8vcpu ]
     steps:
       - uses: 'actions/checkout@v6'
         with:
