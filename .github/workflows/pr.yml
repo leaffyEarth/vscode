@@ -5,10 +5,6 @@ on:
     branches:
       - main
       - 'release/*'
-  pull_request:
-    branches:
-      - main
-      - 'release/*'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -54,7 +50,6 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
           set -e
-
           for i in {1..5}; do # try 5 times
             npm ci && break
             if [ $i -eq 5 ]; then
@@ -75,7 +70,6 @@ jobs:
           node build/azure-pipelines/common/listNodeModules.ts .build/node_modules_list.txt
           mkdir -p .build/node_modules_cache
           tar -czf .build/node_modules_cache/cache.tgz --files-from .build/node_modules_list.txt
-
       - name: Type check /build/ scripts
         run: npm run typecheck
         working-directory: build
@@ -93,21 +87,21 @@ jobs:
       rustup_toolchain: 1.85
 
   linux-electron-tests:
-    name: Linux
+    name: Linux-2
     uses: ./.github/workflows/pr-linux-test.yml
     with:
       job_name: Electron
       electron_tests: true
 
   linux-browser-tests:
-    name: Linux
+    name: Linux-3
     uses: ./.github/workflows/pr-linux-test.yml
     with:
       job_name: Browser
       browser_tests: true
 
   linux-remote-tests:
-    name: Linux
+    name: Linux-4
     uses: ./.github/workflows/pr-linux-test.yml
     with:
       job_name: Remote
@@ -121,14 +115,14 @@ jobs:
       electron_tests: true
 
   macos-browser-tests:
-    name: macOS
+    name: macOS-2
     uses: ./.github/workflows/pr-darwin-test.yml
     with:
       job_name: Browser
       browser_tests: true
 
   macos-remote-tests:
-    name: macOS
+    name: macOS-3
     uses: ./.github/workflows/pr-darwin-test.yml
     with:
       job_name: Remote
@@ -142,14 +136,14 @@ jobs:
       electron_tests: true
 
   windows-browser-tests:
-    name: Windows
+    name: Windows-2
     uses: ./.github/workflows/pr-win32-test.yml
     with:
       job_name: Browser
       browser_tests: true
 
   windows-remote-tests:
-    name: Windows
+    name: Windows-3
     uses: ./.github/workflows/pr-win32-test.yml
     with:
       job_name: Remote
