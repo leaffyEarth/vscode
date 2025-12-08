@@ -10,11 +10,14 @@ permissions: {}
 jobs:
   compile:
     name: Compile
- runs-on: [ self-hosted, monkci-runners-8vcpu ]    steps:
+    runs-on: [ self-hosted, monkci-runners-8vcpu ]
+    steps:
       - name: Checkout microsoft/vscode
         uses: actions/checkout@v6
 
- runs-on: [ self-hosted, monkci-runners-8vcpu ]        with:
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
           node-version-file: .nvmrc
 
       - name: Prepare node_modules cache key
