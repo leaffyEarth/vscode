@@ -11,7 +11,7 @@ on:
 jobs:
   linux-cli-test:
     name: ${{ inputs.job_name }}
-    runs-on: [ self-hosted, monkci-runners-8vcpu ]    
+    runs-on: [ self-hosted, monkci-runners-8vcpu ]
     env:
       RUSTUP_TOOLCHAIN: ${{ inputs.rustup_toolchain }}
     steps:
